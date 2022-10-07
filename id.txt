@@ -1,0 +1,4 @@
+Database : espacecotisation-3137312101 
+Username : espacecotisation-3137312101
+Password : 35z6q1yjy1
+DSN : sdb-c.hosting.stackcp.net

@@ -1,0 +1,281 @@
+/* ---------------------------------------
+Classes existantes
+---------------------------------------- */
+.black-bg {
+    background: #0b3d62;
+    border-bottom: 1px solid #11344e;
+}
+
+.sidebar-toggle-box .fa-bars {
+    color: #fff;
+}
+
+ul.top-menu > li > .logout {
+    color:#000;
+}
+
+aside {
+    position:relative;
+    z-index:45;
+}
+
+.site-footer {
+    position:relative;
+    color: #0b3d62;
+}
+
+.wrapper {
+    margin-top: 0;
+}
+
+/* -------------------------------------------
+Mes Classes
+--------------------------------------------- */
+.visible {
+    display: block;
+}
+
+.pay-btn-block {
+    padding: 10px 30px;
+    text-align: end;
+}
+
+.flex {
+    display:flex;
+}
+@media screen and (max-width: 768px) {
+    .flex {
+        flex-direction: column;
+    }
+}
+
+.flex-h {
+    flex-direction:row;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.flex-center {
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-around {
+    justify-content: space-around;
+}
+
+.flex-between {
+    justify-content: space-between;
+}
+
+.cotisation-panel {
+    max-height: 400px !important;
+    overflow-y: scroll;
+}
+
+.cotisation-panel .content-panel {
+    overflow: scroll;
+}
+
+.info-btn {
+    text-align: center;
+}
+
+#top_menu {
+    padding-top: 60px;
+    background: #e8e5e5;
+}
+
+#top_menu ul {
+    display: flex;
+    justify-content: center;
+}
+
+#contactTech {
+    margin: 20px auto;
+    padding: 12px 5px;
+    text-align: center;
+    max-width: 330px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+#contactTech div p {
+    padding-top: 5px;
+}
+
+.notif {
+    font-size: 18px;
+    text-align: center;
+}
+
+.link-file {
+    max-width: 330px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 15px 0;
+}
+
+
+@media screen and (max-width: 768px) {
+    a.logo {
+        font-size: 16px;
+    }
+
+    #top_menu ul {
+        flex-direction: column;
+    }
+
+    #top_menu ul.top-menu > li {
+        border-bottom: 1px solid #0b3d62;
+    }
+
+    ul.top-menu > li > a {
+        padding: 4px;
+    }
+}
+
+
+#top_menu ul.top-menu > li > a {
+    color: #0b3d62;
+    border: none !important;
+}
+
+#top_menu ul.top-menu > li > a:hover {
+    border: none !important;
+    color: #7f7f7f;
+}
+
+#top_menu ul.top-menu > li > a.btn 
+{
+    color: #fff !important;
+    width: 100%;
+}
+
+.info-block {
+    font-size: 16px;
+}
+
+.table > thead:first-child > tr:first-child > th, 
+.table > tbody > tr > td {
+    font-size: 14px;
+}
+
+.alert-banner {
+    font-size: 18px;
+}
+
+/* ---------------------------------------------------
+FORMULAIRE EXTERIEURS
+------------------------------------------------------ */
+#register-page .container.flex-center {
+    align-items: initial;
+}
+
+.form-register {
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    padding:0;
+}
+
+.form-register h2.form-register-heading {
+    margin: 0;
+    padding: 25px 20px;
+    text-align: center;
+    background: #68dff0;
+    border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    color: #fff;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+#register-page .login-wrap {
+    background-color: #fff;
+}
+
+.btn-support {
+    padding: 18px 0;
+    padding-right: 26px;
+    display: flex;
+    justify-content: center !important;
+}
+
+/* ---------------------------------------------
+PARTIE ADMIN*
+----------------------------------------------- */
+#admin-login {
+    background-color: #97e0ea3d;
+}
+
+.admin .form-login {
+    background: #fff;
+    box-shadow: 1px 1px 9px 1px #09090959;
+}
+
+.admin .form-login h2.form-login-heading {
+    background: #469928;
+}
+
+.adminView {
+    padding-top: 50px;
+}
+
+.table_recu {
+    border: 1px solid #000;
+    width: 100%;
+}
+
+.table_recu th, .table_recu td {
+    padding: 3px;
+}
+
+.table_recu thead th {
+    font-size: 35px;
+    text-align: center;
+}
+
+.table_recu tbody th, 
+.table_recu tbody td {
+    width: 25%;
+    border: 1px solid #000;
+}
+
+.table_recu tbody th {
+    background-color: #5cb85c;
+    color: #fff;
+    text-align: center;
+}
+
+.table_recu tbody td {
+    color: #000;
+    text-align: center;
+}
+
+.divider {
+    height: 40px;
+    width: 100%;
+}
+
+#searchMedecin td,
+#searchMedecin th,
+.bdMedecin td,
+.bdMedecin th 
+{
+    padding: 5px;
+}
+
+.bg-green {
+    background-color: #469928;
+    color:#fff;
+}
+
+.bg-red {
+    background-color: red;
+    color: #fff;
+}

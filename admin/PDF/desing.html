@@ -1,0 +1,275 @@
+<?php
+
+   
+
+    require_once 'pdf.php';
+
+   
+
+?>
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>facture </title>
+
+    <style>
+
+     .container{
+
+    position: relative;
+
+    font: optional;
+
+     margin: 0;
+
+     padding: 0;
+
+     box-sizing: border-box;
+
+     Color : #17365d;
+
+   
+
+}
+
+ 
+
+table {
+
+  font-family: Sakkal Majalla, sans-serif;
+
+  width: 100%;
+
+  font-size: 14px;
+
+}
+
+ 
+
+td, th {
+
+  text-align: left;
+
+  padding: 3px;
+
+}
+
+.logo{
+
+  width: 100px;
+
+  left: 60px;
+
+}
+
+.right{
+
+  margin:30px;
+
+}
+
+.left{
+
+  float: right;
+
+}
+
+ 
+
+h2{
+
+  font-family:Arial,sans-serif;
+
+   text-align:center;
+
+   margin: 8px;
+
+    }
+
+</style>
+
+ 
+
+</head>
+
+<body>
+
+   
+
+    <div class="container">
+
+      <?php foreach($user as $user): ?>
+
+        <!-- premier tableau -->
+
+      <table>
+
+        <tr>
+
+          <td><p>Royaume du Maroc<br>
+
+          <strong>Ordre National des<br> <span class="right">Medecins</strong></span>
+
+        <br>Conseil Régional</p></td>
+
+          <td>  <img src="img/logo.jpg" alt=""  class="logo"></td>
+
+          <td> <p>REÇU N° : <b><?= $user['numRecu']?></b> </p>
+
+            <p>Montant : <b><?= $user['montant']?></b> DHS</p></td>
+
+        <tr>
+
+         
+
+      </table>
+
+          <h2>REÇU DE COTISATION</h2>
+
+       
+
+     <!-- deuxième tableau -->
+
+    <table>
+
+  <tr>
+
+    <td>Reçu du Dr : <?= $user['username'] ?> </td>
+
+  </tr>
+
+  <tr>
+
+  <td>La somme de : <b><?= $user['somme'] ?></b></td>
+
+  </tr>
+
+  <tr>
+
+  <td>Pour paiement de la cotistion au titre de l'année : <b><?= $user['annee de cotisation'] ?></b> </td>
+
+  </tr>
+
+  <tr>
+
+  <td>Mode de paiement : <b><?= $user['mode de paiement'] ?></b> N°: <b><?= $user['NumCmd'] ?></b></td>
+
+  </tr>
+
+  </table>
+
+   <!-- troisième tableau -->
+
+    <table>
+
+  <tr>
+
+  <td>Secteur : <b><?= $user['secteur'] ?></b></td>
+
+  <td>Spécialité : <b><?= $user['spécialité'] ?></b></td>
+
+  </tr>
+
+  </table>
+
+ 
+
+   <!-- quatrième tableau -->
+
+  <table>
+
+  <tr>
+
+  <td>Date d'obtention du Diplôme : <b><?=  $dd = date("d/m/Y", strtotime($user['date reçu'])); ?></b></td>
+
+  </tr>
+
+  <tr>
+
+ 
+
+  <td>Date d'installation ou de recrutrement : <b><?= $dd = date("d/m/Y", strtotime($user['date reçu'])); ?></b></td>
+
+  <td>Date reçu : <b><?= $dd = date("d/m/Y", strtotime($user['date reçu'])); ?></b></td>
+
+  </tr>
+
+  <tr>
+
+  <td>Adresse professionnelle : <b><?= $user['adresse pro'] ?></b></td>
+
+ 
+
+  </tr>
+
+</table>
+
+<!-- cinquième tableau -->
+
+<table>
+
+<tr>
+
+    <td>Province : <b><?=  $user['province'] ?></b></td>
+
+    <td>Region : <b><?=  $user['region']?></b></td>
+
+  </tr>
+
+ 
+
+</table>
+
+<table>
+
+<tr >
+
+    <td></td>
+
+    <td></td>
+
+    <td></td>
+
+    <td></td><td></td>
+
+    <td></td>
+
+    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+
+    <td></td>
+
+    <td></td>
+
+    <td></td>
+
+    <td></td>
+
+    <td></td>
+
+    <td></td>
+
+    <td class="left">Le Trésorier  Général</td>
+
+    </tr>
+
+</table>
+
+        <?php endforeach;?>
+
+    </div>
+
+   
+
+</body>
+
+</html>
