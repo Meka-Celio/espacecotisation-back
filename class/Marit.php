@@ -58,16 +58,16 @@ class Marit
 
         // PARAMETRES POUR LA FONCTION
         $params = array(
-            'sLogin'                =>  LOGIN,
-            'sPwd'                  =>  PWD,
-            'iTypeCotisation'       =>  TYPECOTISATION,
+            'sLogin'                =>  self::LOGIN,
+            'sPwd'                  =>  self::PWD,
+            'iTypeCotisation'       =>  self::TYPECOTISATION,
             'sCINMedecin'           =>  $CINMedecin,
-            'iModeVersement'        =>  MODEVERSEMENT,
+            'iModeVersement'        =>  self::MODEVERSEMENT,
             'sNumRecuCotisation'    =>  '',
             'sNumCheque'            =>  $NumRecuCotisation,
             'sDateCheque'           =>  '',
             'iIdParamCotisation'    =>  intval($IdParamCotisation),
-            'iIdBanque'             =>  IDBANQUE  
+            'iIdBanque'             =>  self::IDBANQUE  
         ); 
         try {
             $response = $clientSOAP->enregisterCotisationMedecin($params);
@@ -121,8 +121,8 @@ class Marit
         }
     }
 
-    function GetRecuCotisation ($NCommande, $CINMedecin) {
-        $clientSOAP = \Marit::createClientSoap();
+    public static function GetRecuCotisation ($NCommande, $CINMedecin) {
+        $clientSOAP = Marit::createClientSoap();
 
         // PARAMETRES
         $params = array(

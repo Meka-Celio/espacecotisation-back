@@ -100,13 +100,13 @@
                                 <tbody>
                                     <?php foreach ($transactions as $trans) { ?>
                                         <tr>
-                                            <td><?= $trans['CIN'] ?></td>
-                                            <td><?= $trans['Nom'] ?></td>
+                                            <td><?= $trans['cin'] ?></td>
+                                            <td><?= $trans['nom'] ?></td>
                                             <td>
-                                                <p style="width:250px !important;"><?= $trans['AnneesPayees'] ?></p></td>
-                                            <td><?= $trans['N_Commande'] ?></td>
-                                            <td><?= $trans['Montant'] ?></td>
-                                            <td><?= $trans['DatePaiement'] ?></td>
+                                                <p style="width:250px !important;"><?= $trans['anneesPayees'] ?></p></td>
+                                            <td><?= $trans['n_commande'] ?></td>
+                                            <td><?= $trans['montant'] ?></td>
+                                            <td><?= $trans['datePaiement'] ?></td>
                                             <td>
                                                 <a href="index.php?c=transaction&task=show&id=<?= $trans['id'] ?>" class="btn btn-info btn-circle"><i class="fa fa-search"></i></a>
                                             </td>

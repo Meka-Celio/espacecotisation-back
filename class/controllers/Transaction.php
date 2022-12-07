@@ -63,7 +63,7 @@ class Transaction extends Controller
 
 		$transaction = $this->model->find($transaction_id);
 
-		$pageTitle = "Transaction N° ".$transaction['N_Commande'];
+		$pageTitle = "Transaction N° ".$transaction['n_commande'];
 
 		\Renderer::render('views/transaction-show', compact('pageTitle', 'transaction', 'transaction_id'));
 	}
@@ -85,48 +85,6 @@ class Transaction extends Controller
 		$this->model->update($column, $value, $transaction_id);
 		\Http::redirect ("index.php?c=transaction&task=show&id=$transaction_id");
 	}
-
-	public function getRecu ()
-	{
-		$medecinModel = new \models\Medecin();
-
-		$cin 		= "";
-		$ncommande 	= "";
-		$transaction_id = "";
-
-		$medecin = null;
-		$maritMedecin = null;
-
-		if (!empty($_POST)) {
-			$cin = $_POST['cin'];
-			$ncommande = $_POST['ncommande'];
-			$transaction_id = $_POST['id'];
-		}else{
-			echo "Aucun formulaire n'a été envoyé !";
-			die();
-		}
-
-		$getRecu = \Marit::GetRecuCotisation($ncommande, $cin);
-		$getRecuResponse = $getRecu->GetRecuCotisationPayerAvecAuthResult;
-
-		if (isset($getRecuResponse->MedecinCotisationPayee)) { 
-			$recusPaiement = $getRecu->GetRecuCotisationPayerAvecAuthResult->MedecinCotisationPayee;
-			$medecin = $medecinModel->findByCIN($cin);
-			$getInfoMedecin = \Marit::getInfoMedecin($cin);
-			$maritMedecin = $getInfoMedecin->GetInfoMedecinAvecAuthResult;
-		}
-		else
-		{
-			$recusPaiement = null;
-		}
-
-		$transaction = $this->model->find($transaction_id);
-
-		$pageTitle = "Transaction N° $ncommande";
-
-		\Renderer::render('views/transaction-show', compact('pageTitle', 'transaction', 'transaction_id', 'recusPaiement', 'medecin', 'maritMedecin'));
-	}
-
 
 	public function search ()
 	{

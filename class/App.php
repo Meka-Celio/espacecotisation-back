@@ -10,7 +10,7 @@ class App
     public static function start () 
     {
         $controllerName =   "User";
-        $task           =   "dashboard";
+        $task           =   "auth";
 
         if (!empty($_GET['c']))
         {

@@ -64,16 +64,16 @@
                             <a href="index.php?c=medecin&task=index" class="link-danger"><i class="fa fa-user-md fa-fw"></i> Médecins</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Admin<span class="fa arrow"></span></a>
+                            <a href="index.php?c=transaction&task=index"><i class="fa fa-th-list"></i> Transactions</a>
+                        </li>
+                        <li>
+                            <a href="index.php?c=user&task=index"><i class="fa fa-group"></i> Utilisateurs</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Cotisations<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="index.php?c=transaction&task=index"><i class="fa fa-th-list"></i> Liste Transactions</a>
-                                </li>
-                                <li>
-                                    <a href="index.php?c=cotisation&task=insert"><i class="fa fa-edit"></i> Ajout de cotisations</a>
-                                </li>
-                                <li>
-                                    <a href="index.php?c=user&task=index"><i class="fa fa-group"></i> Utilisateurs</a>
+                                    <a href="index.php?c=cotisation&task=add"><i class="fa fa-edit"></i> Ajout de cotisations</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

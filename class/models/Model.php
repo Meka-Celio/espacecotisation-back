@@ -102,9 +102,8 @@ abstract class Model
 	
 	public function update (string $column, $value, int $id)
 	{
-		// $sql = "UPDATE {$this->table} SET $column = $value WHERE id = $id";
-		$query = $this->pdo->prepare("UPDATE {$this->table} SET $column = '$value' WHERE id = $id");
-		$query->execute(['id' => $id]);
+		$sql = "UPDATE {$this->table} SET $column = $value WHERE id = $id";
+		$query = $this->pdo->query($sql);
 	}
 
 

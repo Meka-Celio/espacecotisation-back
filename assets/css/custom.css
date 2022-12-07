@@ -6,3 +6,42 @@
 {
 	background-color: rgb(220,53,69);
 }
+
+.table_filters 
+{
+	padding-top: 15px;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.panel-body
+{
+	overflow: scroll;
+}
+
+#dataTables-example,
+#dataTables-example th,
+.cotisation-table,
+.cotisation-table th
+{
+	vertical-align: middle;
+	text-align: center;
+}
+
+.transaction-table 
+{
+	table-layout: auto;
+	font-size: 13px;
+}
+
+.transaction-table > thead > tr > th,
+.transaction-table > tbody > tr > td
+{
+	text-align: center;
+	vertical-align: middle;
+}
+
+.action-buttons {
+	display: flex;
+	justify-content: space-around;
+}

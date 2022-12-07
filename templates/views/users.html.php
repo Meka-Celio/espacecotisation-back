@@ -24,11 +24,25 @@
                         </div>
                         <?php } ?>
 
-                        <?php 
-                            if (isset($_GET['msgAlert'])) {
-                                var_dump(explode(',', $_GET['msgAlert']));
-                            }
-                        ?>
+                        <?php if (isset($_GET['msgAlert'])) {  ?>
+                            <?php if ($_GET['msgAlert'] == "success") { ?>
+                                <div class="row">
+                                    <div class="col-sm-12 mb-2">
+                                        <div class="alert alert-success">
+                                            <p>Le nouvel utilisateur a bien été créé !</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } else { ?>
+                                <div class="row">
+                                    <div class="col-sm-12 mb-2">
+                                        <div class="alert alert-danger">
+                                            <p>La création d'un nouvel utilisateur a échoué ! <br> Merci de recommencer !</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        <?php } ?>
 
                         <div class="row">
                             <div class="table_filters">
@@ -72,7 +86,6 @@
                                         <th>#</th>
                                         <th>Login</th>
                                         <th>Email</th>
-                                        <th>Type</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -81,16 +94,6 @@
                                             <td><?php echo $user['id'] ?></td>
                                             <td><?php echo $user['login'] ?></td>
                                             <td><?php echo $user['email'] ?></td>
-                                            <td>
-                                                <?php if ($user['autorisation'] == 1) { 
-                                                    echo "User";
-                                                } else if($user['autorisation'] == 2) {
-                                                    echo "Manager";
-                                                } else {
-                                                    echo "Admin";
-                                                } ?>
-                                                
-                                            </td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>

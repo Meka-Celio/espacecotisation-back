@@ -48,12 +48,6 @@ function verif (rule, value)
 			check = (!value.trim() == "") ? ((value.length >= 5) ? 1 : 0) : 0
 			validation.push(check)
 		break;
-		case 'verif-password':
-			let formgroup 	= 	document.querySelector('[data-rule="password"]')
-			let originValue =	formgroup.querySelector('input').value 
-			check = (value == originValue) ? ((originValue == 0) ? 0 : 1) : 0
-			validation.push(check)
-		break;
 		case 'tel':
 		break;
 		default:break;

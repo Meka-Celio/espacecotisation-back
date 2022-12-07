@@ -6,12 +6,29 @@ class User extends Model
 {
 	protected $table = "users";
 
-	public function findByLogin (int $id) 
+	public function findByLogin (string $login) 
 	{	
-		
-		$query = $this->pdo->prepare("SELECT * FROM {$this->table} WHERE id = :id");
-		$query->execute(['id' => $id]);
-		$item = $query->fetch();
+		$sql = "SELECT * FROM {$this->table} WHERE login = '$login'";
+		$resultat 	= 	$this->pdo->query($sql);
+		$item = $resultat->fetch();
+
+		return $item;
+	}
+
+	public function findEmail (string $email) 
+	{	
+		$sql = "SELECT * FROM {$this->table} WHERE email = '$email'";
+		$resultat 	= 	$this->pdo->query($sql);
+		$item = $resultat->fetch();
+
+		return $item;
+	}
+
+	public function findUser (string $login, string $motdepasse)
+	{	
+		$sql = "SELECT * FROM {$this->table} WHERE login = '$login' AND motdepasse = '$motdepasse'";
+		$resultat 	= 	$this->pdo->query($sql);
+		$item = $resultat->fetch();
 
 		return $item;
 	}

@@ -84,10 +84,21 @@ class Medecin extends Controller
 
 		$getCotisationPayer 	=	\Marit::getCotisationPayer($medecin['cin']);
 		$getCotisationPayerResponse = $getCotisationPayer->GetCotisationPayerAvecAuthResult->MedecinCotisation->listeAnnee;
-		
+		$montantNonPayer = 0;
+
 		if (isset($getCotisationNonPayerResponse->AnneeVM))
 		{
 			$cotisationNonPayer = $getCotisationNonPayerResponse->AnneeVM;
+			if (is_array($cotisationNonPayer))
+			{
+				for ($i = 0; $i < count($cotisationNonPayer); $i++) {
+					$montantNonPayer += substr($cotisationNonPayer[$i]->AnneeMontant, 7);
+				}
+			}
+			else 
+			{
+				$montantNonPayer += substr($cotisationNonPayer->AnneeMontant, 7);
+			}
 		}
 		else
 		{
@@ -105,14 +116,11 @@ class Medecin extends Controller
 			$cotisationPayer = null;
 		}
 
-		// ["Id"]=> int(38) ["Annee"]=> int(2022) ["AnneeMontant"]
-
-
 		/**
 		 * 5. On affiche 
 		 */
 		$pageTitle = 'Voir medecin - '.$medecin['nom_complet'];
-		\Renderer::render ('views/medecin-show', compact('pageTitle', 'medecin', 'medecin_id', 'mMedecin', 'cotisationPayer', 'cotisationNonPayer'));
+		\Renderer::render ('views/medecin-show', compact('pageTitle', 'medecin', 'medecin_id', 'mMedecin', 'cotisationPayer', 'cotisationNonPayer', 'montantNonPayer'));
 	}
 
 

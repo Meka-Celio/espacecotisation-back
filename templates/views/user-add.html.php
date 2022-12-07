@@ -30,22 +30,19 @@
                                                 <li>L'adresse mail est invalide !</li>
 
                                             <?php } else if ($msgAlert[$i] == 'email_already_exist') { ?>
-                                                <li>Cet email correspond déjà àun utilisateur !</li>
+                                                <li>Cet email correspond déjà à un utilisateur !</li>
 
                                             <?php } else if ($msgAlert[$i] == 'email_null') { ?>
                                                 <li>Merci de préciser une adresse mail !</li>
 
-                                            <?php } else if ($msgAlert[$i] == 'password_to_short') { ?>
+                                            <?php } else if ($msgAlert[$i] == 'password_false') { ?>
                                                 <li>Le mot de passe doit contenir au moins 5 caractères !</li>
 
                                             <?php } else if ($msgAlert[$i] == 'password_null') { ?>
                                                 <li>Merci de définir un mot de passe !</li>
 
-                                            <?php } else if ($msgAlert[$i] == 'password_not_equal') { ?>
-                                                <li>Les mot de passes ne correspondent pas !</li>
-
                                             <?php } else { ?>
-                                                <li>Les mot de passes ne correspondent pas !</li>
+                                                <li>Erreur lors de l'execution de la requete !</li>
                                             <?php } ?>
 
                                         <?php } ?>
@@ -77,11 +74,6 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
-                                                <div class="form-group" data-rule="verif-password">
-                                                    <label class="control-label">Vérification mot de passe *</label>
-                                                    <input type="password" name="verifmotdepasse" value="" placeholder="Mot de passe" class="form-control">
-                                                    <p class="help-block"></p>
-                                                </div>
                                                 <div class="form-group has-success">
                                                     <label class="control-label">Type du user</label>
                                                     <select name="autorisation" id="" class="form-control text-success">

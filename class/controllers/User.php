@@ -10,12 +10,78 @@ class User extends Controller
 	{
 		$pageTitle = "Authentification";
 
+		if (isset($_POST['alert']))
+		{
+			$codeAlert  = 	$_POST['alert'];
+			$alert 		= 	\Alert::getNotification();
+		}
+
 		\Renderer::formrender('views/login', compact('pageTitle'));
 	}
 
 	public function login ()
 	{
 		\Http::redirect('index.php?c=user&task=dashboard');
+		$login 		=	null;
+		$dUser 		=	null;
+		$dMotdepasse = null;
+		$passVerify = 	null;
+		$msgAlert	=	null;
+		$ok = 0;
+
+		if (!empty($_POST['login']))
+		{
+			$dUser = $this->model->findByLogin($_POST['login']);
+			if ($dUser)
+			{
+				$dMotdepasse = $dUser['motdepasse'];
+				$login = $_POST['login'];
+				$msgAlert .= "log_ok,";
+				$ok += 1;
+			}
+			else
+			{
+				$msgAlert .= 'log_false,';
+			}
+		}
+		else
+		{
+			$msgAlert .= 'log_null,';
+		}
+
+
+		if (!empty($_POST['password']))
+		{	
+			//$passVerify = password_verify($_POST['password'], $dMotdepasse);
+
+			$passVerify = $_POST['password'];
+
+			if ($passVerify) 
+			{	
+				$msgAlert .= "pass_ok";
+				$ok += 1;
+
+				if ($this->model->findUser($login, $dMotdepasse))
+				{
+					\Http::redirect('index.php?c=user&task=dashboard');
+					echo "Connexion réussi";
+				}
+				else
+				{	$msgAlert .= 'con_fail';
+					\Http::redirect("index.php?c=user&task=auth&msgAlert=$msgAlert");
+				}
+			}
+			else
+			{
+				$msgAlert .= 'pass_false';
+				\Http::redirect("index.php?c=user&task=auth&msgAlert=$msgAlert");
+			}
+		}
+		else
+		{
+			$msgAlert .= 'pass_null';
+			\Http::redirect("index.php?c=user&task=auth&msgAlert=$msgAlert");
+		}
 	}
 
 	public function logout ()
@@ -55,10 +121,8 @@ class User extends Controller
 		$medecinModel 		= 	new \models\Medecin();
 		$regionModel		=	new \models\Region();
 		$specialiteModel	=	new \models\Specialite();
+		$transactionModel 	=	new \models\Transaction();
 
-		$limit 				=	12;
-
-		$medecins 			= 	$medecinModel->findAllByLimit(0, $limit);
 		$regions 			= 	$regionModel->findAll();
 		$specialites		=	$specialiteModel->findAll();
 
@@ -74,9 +138,12 @@ class User extends Controller
 		$tabNbrUsers			=	$this->model->getNumberOf();
 		$nbrUsers 				=	(int)$tabNbrUsers[0]['NumberOf'];
 
+		$tabNbrTransactions 	=	$transactionModel->getNumberOf();
+		$nbrTransactions 		=	(int)$tabNbrTransactions[0]['NumberOf'];
+
 		$pageTitle = "Dashboard";
 
-		\Renderer::render('views/dashboard', compact('pageTitle', 'medecins', 'regions', 'specialites', 'nbrMedecins', 'nbrRegions', 'nbrSpecialites', 'nbrUsers'));
+		\Renderer::render('views/dashboard', compact('pageTitle', 'nbrMedecins', 'nbrRegions', 'nbrSpecialites', 'nbrUsers', 'nbrTransactions'));
 
 	}
 
@@ -195,47 +262,44 @@ class User extends Controller
 		// mot de passe
 		$motdepasse = null;
 		if (!empty($_POST['motdepasse'])) {
-		    $motdepasse = password_hash($_POST['motdepasse']);
-		    // vérifier le mot de passe
-			$verifmotdepasse = null;
-			if (!empty($_POST['verifmotdepasse'])) {
-			    if ($_POST['verifmotdepasse'] == password_verify($_POST['verifmotdepasse'], $motdepasse))
-			    {
-			    	$ok += 1;
-			    }
-			    else {
-					$msgAlert .= "password_not_equal";
-				}
+			if (strlen($_POST['motdepasse'])) {
+				$motdepasse = password_hash($_POST['motdepasse'], PASSWORD_DEFAULT);
+				$ok += 1;
 			}
 			else {
-				$msgAlert .= "verif_null";
+				$msgAlert .= "password_false";
 			}
-		    $ok += 1;
 		}
 		else {
-			$msgAlert .= "password_false,";
+			$msgAlert .= "password_null";
 		}
-
-		
 
 		// l'autorisation
 		$autorisation = $_POST['autorisation'] * 1;
 
 
 		// 3. Si création réussi
-		if ($ok == 4) {
-			$query = $this->model->insert($login, $motdepasse, $email, $autorisation);
-			if ($query) {
-				$msgAlert = 'success';
-				// 4. Redirection vers la page user en question :
-				\Http::redirect ("index.php?c=user&task=index&msgAlert=$msgAlert");
-			}
-			else 
+		if ($ok == 3) {
+
+			if ($this->model->findEmail($email)) 
 			{
-				$msgAlert = 'failure';
-				// 4. Redirection vers la page user en question :
-				\Http::redirect ("index.php?c=user&task=index&msgAlert=$msgAlert");
+				$msgAlert .= "email_already_exist";
+				\Http::redirect ("index.php?c=user&task=add&msgAlert=$msgAlert");
 			}
+			else
+			{
+				if ($this->model->insert($login, $motdepasse, $email, $autorisation)) {
+					$msgAlert = 'success';
+					// 4. Redirection vers la page user en question :
+					\Http::redirect ("index.php?c=user&task=index&msgAlert=$msgAlert");
+				}
+				else 
+				{
+					$msgAlert = 'failure';
+					// 4. Redirection vers la page user en question :
+					\Http::redirect ("index.php?c=user&task=index&msgAlert=$msgAlert");
+				}
+			}	
 		}
 		else {
 			// 4. Redirection vers la page user en question :
