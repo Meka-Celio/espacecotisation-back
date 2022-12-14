@@ -7,7 +7,7 @@
             </div>
             <!-- /.row -->
             <div class="row">
-                <div class="col-lg-2">
+                <div class="col-lg-3">
                     <div class="panel panel-grey">
                         <div class="panel-heading">
                             Rechercher
@@ -38,7 +38,7 @@
                     <!-- /.panel -->
                 </div>
 
-                <div class="col-lg-10">
+                <div class="col-lg-9">
                     <div class="panel panel-grey">
                         <div class="panel-heading">
                             Voir

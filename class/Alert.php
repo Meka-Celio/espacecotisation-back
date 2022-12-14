@@ -27,6 +27,16 @@ class Alert
 			case 'noExistCin':
 				$msgAlert = '<div class="row"><div class="col-sm-12 mb-2"><div class="alert alert-danger">Ce médecin n\'existe pas  !</div></div></div>';
 				break;
+			case 'noEqualsYears':
+				$msgAlert = '<div class="row"><div class="col-sm-12 mb-2"><div class="alert alert-danger">Les années reçues ne correspondent pas à celles figurant dans la transaction  !</div></div></div>';
+				break;
+			case 'failAddQuery':
+				$msgAlert = '<div class="row"><div class="col-sm-12 mb-2"><div class="alert alert-danger">L\'ajout de cotisation a échoué  !</div></div></div>';
+				break;
+
+			case 'okAddCotisation':
+				$msgAlert = '<div class="row"><div class="col-sm-12 mb-2"><div class="alert alert-success">Les années ont bien été enregistrées !</div></div></div>';
+				break;
 			default:break;
 		}
 		return $msgAlert;

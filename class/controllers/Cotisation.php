@@ -27,8 +27,6 @@ class Cotisation extends Controller
 		$idCotisation 		= 	"";
 		$anneeCotisation 	=	"";
 
-		
-
 		// VALIDATION DU FORMULAIRE
 		// SI FORM
 		if (isset($_POST['submit']))
@@ -78,11 +76,60 @@ class Cotisation extends Controller
 				$transaction = $this->model->findBySearch('n_commande', $nCommande);
 				if ($transaction)
 				{
-					if ( $anneeCotisation == $transaction->anneesPayees)
-					$query = \Marit::AjoutCotisation($cin, $nCommande, $idCotisation);
-					echo '<pre>';
-					var_dump($query);
-					echo '</pre>';
+					// Récupération de la chaine années Payées
+					$anneesPayees = $transaction['anneesPayees'];
+					
+					// Tableau recevant les anneesPayees de la transaction
+					$reverseTabYears = explode(',', $anneesPayees);
+
+					// Renverser le tableau
+					$tabYears = array_reverse($reverseTabYears);
+
+					// Tableau des ID de cotisations
+					$TabIdCotisation = array();
+
+					// Ajouter les Id des cotisations
+					for ($z=0; $z<count($tabYears); $z++) {
+						if ($tabYears[$z] == '2009') {
+							array_push($TabIdCotisation, 25);
+						}
+						else if ($tabYears[$z] == '2010') { array_push($TabIdCotisation, 26); }
+						else if ($tabYears[$z] == '2011') { array_push($TabIdCotisation, 27); }
+						else if ($tabYears[$z] == '2012') { array_push($TabIdCotisation, 28); }
+						else if ($tabYears[$z] == '2013') { array_push($TabIdCotisation, 29); }
+						else if ($tabYears[$z] == '2014') { array_push($TabIdCotisation, 30); }
+						else if ($tabYears[$z] == '2015') { array_push($TabIdCotisation, 31); }
+						else if ($tabYears[$z] == '2016') { array_push($TabIdCotisation, 32); }
+						else if ($tabYears[$z] == '2017') { array_push($TabIdCotisation, 33); }
+						else if ($tabYears[$z] == '2018') { array_push($TabIdCotisation, 34); }
+						else if ($tabYears[$z] == '2019') { array_push($TabIdCotisation, 35); }
+						else if ($tabYears[$z] == '2020') { array_push($TabIdCotisation, 36); }
+						else if ($tabYears[$z] == '2021') { array_push($TabIdCotisation, 37); }
+						else { array_push($TabIdCotisation, 38); }
+					}
+
+					// Chaine d'identifiant
+					$stringIdCotisation = implode(',', $TabIdCotisation);
+
+					// Comparation de la chaine d'identifiant avec celle envoyée par le formulaire
+					if ($idCotisation == $stringIdCotisation)
+					{
+						$query = \Marit::AjoutCotisation($cin, $nCommande, $idCotisation);
+						if ($query) {
+							$note = "okAddCotisation";
+							\Http::redirect ("index.php?c=cotisation&task=add&note=$note");
+						}
+						else 
+						{
+							$note = "failAddQuery";
+							\Http::redirect ("index.php?c=cotisation&task=add&note=$note");
+						}
+					}
+					else 
+					{
+						$note = "noEqualsYears";
+						\Http::redirect ("index.php?c=cotisation&task=add&note=$note");
+					}
 				}
 				else 
 				{

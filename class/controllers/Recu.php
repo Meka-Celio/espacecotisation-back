@@ -13,7 +13,7 @@ class Recu extends Controller
 		 */
 		$pageTitle = "Génération de reçu de paiement";
 
-		\Renderer::render('views/createRecu', compact('pageTitle'));
+		\Renderer::render('views/findRecu', compact('pageTitle'));
 	}
 
 
