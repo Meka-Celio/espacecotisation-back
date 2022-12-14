@@ -1,14 +1,14 @@
 <div id="page-wrapper"> 
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header text-success">Utilisateurs <span><a href="index.php?c=user&task=add" class="btn btn-success"><i class="fa fa-plus"></i></a></span></h1>
+                    <h1 class="page-header text-primary">Utilisateurs <span><a href="index.php?c=user&task=add" class="btn btn-primary"><i class="fa fa-plus"></i></a></span></h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-10">
-                    <div class="panel panel-green">
+                    <div class="panel panel-primary">
                         <div class="panel-heading">
                             Tous les utilisateurs
                         </div>
@@ -25,10 +25,10 @@
                         <?php } ?>
 
                         <?php if (isset($_GET['msgAlert'])) {  ?>
-                            <?php if ($_GET['msgAlert'] == "success") { ?>
+                            <?php if ($_GET['msgAlert'] == "primary") { ?>
                                 <div class="row">
                                     <div class="col-sm-12 mb-2">
-                                        <div class="alert alert-success">
+                                        <div class="alert alert-primary">
                                             <p>Le nouvel utilisateur a bien été créé !</p>
                                         </div>
                                     </div>
@@ -73,7 +73,7 @@
 
                                     <input type="hidden" name="submit" value="submit">
                                     <div class="col-sm-2">
-                                        <button class="btn btn-warning"><i class="fa fa-search"></i></button>
+                                        <button class="btn btn-primary"><i class="fa fa-search"></i></button>
                                     </div>
                                 </form>
                             </div>
@@ -86,6 +86,7 @@
                                         <th>#</th>
                                         <th>Login</th>
                                         <th>Email</th>
+                                        <th>Type</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -94,6 +95,20 @@
                                             <td><?php echo $user['id'] ?></td>
                                             <td><?php echo $user['login'] ?></td>
                                             <td><?php echo $user['email'] ?></td>
+                                            <td>
+                                                <?php if ($user['autorisation'] === 1)
+                                                {
+                                                    echo "User";
+                                                } 
+                                                else if ($user['autorisation'] === 10)
+                                                {
+                                                    echo "Admin";
+                                                }
+                                                else {
+                                                    echo "Gestionnaire";
+                                                }
+                                                ?>
+                                            </td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>

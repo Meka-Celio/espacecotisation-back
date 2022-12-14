@@ -5,16 +5,30 @@
  */
 class Alert 
 {
-	// Affiche le(s) messages d'erreurs
-	public static function errorAlert (string $msgAlert)
+	public static function getAlert ($codeAlert)
 	{
-		$alert = explode(',', $msgAlert);
-		
-	}
-
-	// Affiche les messages de réussites
-	public static function successAlert ()
-	{
-
+		switch ($codeAlert)
+		{
+			case 'noForm':
+				$msgAlert = '<div class="row"><div class="col-sm-12 mb-2"><div class="alert alert-danger">Aucune donnée n\'a été envoyé, merci de remplir le formulaire !</div></div></div>';
+				break;
+			case 'noCin':
+				$msgAlert = '<div class="row"><div class="col-sm-12 mb-2"><div class="alert alert-danger">La CIN du médecin est obligatoire !</div></div></div>';
+				break;
+			case 'nCommandeNum':
+				$msgAlert = '<div class="row"><div class="col-sm-12 mb-2"><div class="alert alert-danger">Le numéro de commande est obligatoire !</div></div></div>';
+				break;
+			case 'noYearsAdd':
+				$msgAlert = '<div class="row"><div class="col-sm-12 mb-2"><div class="alert alert-danger">Vous devez ajouter au moins une année !</div></div></div>';
+				break;
+			case 'noTransactionFind':
+				$msgAlert = '<div class="row"><div class="col-sm-12 mb-2"><div class="alert alert-danger">Le numéro de commande renseigné ne correspond à aucune transaction !</div></div></div>';
+				break;
+			case 'noExistCin':
+				$msgAlert = '<div class="row"><div class="col-sm-12 mb-2"><div class="alert alert-danger">Ce médecin n\'existe pas  !</div></div></div>';
+				break;
+			default:break;
+		}
+		return $msgAlert;
 	}
 }

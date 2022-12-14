@@ -1,14 +1,14 @@
 <div id="page-wrapper"> 
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header text-info">Transactions</h1>
+                    <h1 class="page-header text-warning">Transactions</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="panel panel-info">
+                    <div class="panel panel-warning">
                         <div class="panel-heading">
                             Toutes les transactions
                         </div>
@@ -26,7 +26,7 @@
                                                 </div>
                                                 <input type="hidden" name="submit" value="submit">
                                                 <div class="col-sm-4">
-                                                    <button class="btn btn-info"><i class="fa fa-search"></i></button>
+                                                    <button class="btn btn-warning"><i class="fa fa-search"></i></button>
                                                 </div>
                                             </div>
                                         </form>
@@ -42,7 +42,7 @@
                                                 </div>
                                                 <input type="hidden" name="submit" value="submit">
                                                 <div class="col-sm-4">
-                                                    <button class="btn btn-info"><i class="fa fa-search"></i></button>
+                                                    <button class="btn btn-warning"><i class="fa fa-search"></i></button>
                                                 </div>
                                             </div>
                                         </form>
@@ -58,7 +58,7 @@
                                                 </div>
                                                 <input type="hidden" name="submit" value="submit">
                                                 <div class="col-sm-4">
-                                                    <button class="btn btn-info"><i class="fa fa-search"></i></button>
+                                                    <button class="btn btn-warning"><i class="fa fa-search"></i></button>
                                                 </div>
                                             </div>
                                         </form>
@@ -74,7 +74,7 @@
                                                 </div>
                                                 <input type="hidden" name="submit" value="submit">
                                                 <div class="col-sm-4">
-                                                    <button class="btn btn-info"><i class="fa fa-search"></i></button>
+                                                    <button class="btn btn-warning"><i class="fa fa-search"></i></button>
                                                 </div>
                                             </div>
                                         </form>
@@ -103,7 +103,7 @@
                                             <td><?= $trans['n_commande'] ?></td>
                                             <td><?= $trans['datePaiement'] ?></td>
                                             <td>
-                                                <a href="index.php?c=transaction&task=show&id=<?= $trans['id'] ?>" class="btn btn-info btn-circle"><i class="fa fa-search"></i></a>
+                                                <a href="index.php?c=transaction&task=show&id=<?= $trans['id'] ?>" class="btn btn-warning btn-circle"><i class="fa fa-search"></i></a>
                                             </td>
                                         </tr>
                                     <?php } ?>

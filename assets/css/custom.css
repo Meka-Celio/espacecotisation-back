@@ -1,3 +1,35 @@
+/* *------------------------------------------
+	Pagination
+----------------------------------------------*/
+.paginator 
+{
+	list-style-type: none;
+	display: flex;
+	justify-content: end;
+}
+
+.paginator li 
+{
+	margin: 0 4px;
+}
+
+.paginator li a
+{
+	display: block;
+	padding: 6px;
+	background-color: #e8e8e7eb;
+	border-radius: 5px;
+	color: #565555d6;
+}
+
+.paginator li:first-child a
+{
+	background-color: #c0c5d596;
+}
+
+/* -----------------------------------------------
+	Couleur
+----------------------------------------------*/
 .text-bg-success {
 	background-color: rgb(25,135,84);
 }
@@ -6,6 +38,25 @@
 {
 	background-color: rgb(220,53,69);
 }
+
+.text-grey 
+{
+	color: #949aa0;
+}
+
+.panel-grey {
+	border-color: #949aa0;
+}
+
+.panel-grey > .panel-heading {
+	border-color: #949aa0;
+	color: white;
+	background-color: #949aa0;
+}
+
+/* -----------------------------------------
+tableaux
+------------------------------------------- */
 
 .table_filters 
 {
@@ -19,23 +70,17 @@
 	overflow: scroll;
 }
 
-#dataTables-example,
-#dataTables-example th,
-.cotisation-table,
-.cotisation-table th
-{
-	vertical-align: middle;
-	text-align: center;
-}
-
 .transaction-table 
 {
 	table-layout: auto;
 	font-size: 13px;
 }
 
-.transaction-table > thead > tr > th,
-.transaction-table > tbody > tr > td
+#dataTables-example,
+#dataTables-example th,
+#dataTables-example td,
+.cotisation-table,
+.cotisation-table th
 {
 	text-align: center;
 	vertical-align: middle;

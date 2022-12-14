@@ -1,5 +1,6 @@
 <?php
-
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
 /**
  * CE FICHIER A POUR BUT D'AFFICHER LA PAGE D'ACCUEIL !
  * 

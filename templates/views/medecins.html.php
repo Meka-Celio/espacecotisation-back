@@ -1,14 +1,14 @@
 <div id="page-wrapper"> 
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header text-warning">Médecins</h1>
+                    <h1 class="page-header text-success">Médecins</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="panel panel-yellow">
+                    <div class="panel panel-success">
                         <div class="panel-heading">
                             Tous les médecins
                         </div>
@@ -68,7 +68,7 @@
                                     </div>
                                     <input type="hidden" name="submit" value="submit">
                                     <div class="col-sm-2">
-                                        <button class="btn btn-warning"><i class="fa fa-search"></i></button>
+                                        <button class="btn btn-success"><i class="fa fa-search"></i></button>
                                     </div>
                                 </form>
                             </div>
@@ -83,6 +83,7 @@
                                         <th>Prenom</th>
                                         <th>Region</th>
                                         <th>Specialite</th>
+                                        <th>Status</th>
                                         <th>#</th>
                                     </tr>
                                 </thead>
@@ -94,7 +95,14 @@
                                             <td><?php echo $med['prenom'] ?></td>
                                             <td><?php echo $med['region'] ?></td>
                                             <td><?php echo $med['specialite'] ?></td>
-                                            <td><a href="index.php?c=medecin&task=show&id=<?= $med['id'] ?>" class="btn btn-warning btn-circle"><i class="fa fa-edit "></i></a></td>
+                                            <td>
+                                            <?php if ($med['pwd'] == '12345') { ?>
+                                                <span class="badge text-bg-danger">Non Inscrit</span>
+                                            <?php } else { ?>
+                                                <span class="badge text-bg-success">Inscrit</span>
+                                            <?php } ?>
+                                            </td>
+                                            <td><a href="index.php?c=medecin&task=show&id=<?= $med['id'] ?>" class="btn btn-success btn-circle"><i class="fa fa-edit "></i></a></td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>

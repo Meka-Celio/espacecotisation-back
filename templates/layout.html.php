@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
 
@@ -74,6 +74,9 @@
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="index.php?c=cotisation&task=add"><i class="fa fa-edit"></i> Ajout de cotisations</a>
+                                </li>
+                                <li>
+                                    <a href="index.php?c=recu&task=show"><i class="fa fa-edit"></i> Voir reçus de paiement</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
