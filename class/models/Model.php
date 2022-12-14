@@ -35,7 +35,7 @@ abstract class Model
 	}
 
 
-	public function findAll (?string $order = ""): array {
+	public function findAll (string $order = ""): array {
 		
 		$sql = "SELECT * FROM {$this->table}";
 
@@ -60,7 +60,7 @@ abstract class Model
 		return $items;
 	}
 
-	public function findAllBySearch (string $column, string $search, int $start, ?string $order = ""): array
+	public function findAllBySearch (string $column, string $search, int $start, string $order = ""): array
 	{
 		if ($start <= 0) { $start = 1; }
 
@@ -107,7 +107,7 @@ abstract class Model
 	}
 
 
-	public function findAllByLimit (int $start, int $limit, ?string $order = ""): array {
+	public function findAllByLimit (int $start, int $limit, string $order = ""): array {
 		
 		$filtre = "";
 
