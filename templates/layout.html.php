@@ -69,14 +69,18 @@
                         <li>
                             <a href="index.php?c=user&task=index"><i class="fa fa-group"></i> Utilisateurs</a>
                         </li>
+                        <!-- <li>
+                            <a href="index.php?c=recu&task=index"><i class="fa fa-file"></i> Reçus de paiement</a>
+                        </li> -->
                         <li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Cotisations<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="index.php?c=cotisation&task=add"><i class="fa fa-edit"></i> Ajout de cotisations</a>
                                 </li>
+                                
                                 <li>
-                                    <a href="index.php?c=recu&task=show"><i class="fa fa-edit"></i> Voir reçus de paiement</a>
+                                    <a href="index.php?c=recu&task=show"><i class="fa fa-edit"></i> Rechercher reçus de paiement</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

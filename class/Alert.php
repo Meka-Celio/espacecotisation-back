@@ -34,9 +34,18 @@ class Alert
 				$msgAlert = '<div class="row"><div class="col-sm-12 mb-2"><div class="alert alert-danger">L\'ajout de cotisation a échoué  !</div></div></div>';
 				break;
 
+			case 'noRecuGet':
+				$msgAlert = '<div class="row"><div class="col-sm-12 mb-2"><div class="alert alert-danger">Aucun recu n\'a été trouvé !</div></div></div>';
+				break;
+
 			case 'okAddCotisation':
 				$msgAlert = '<div class="row"><div class="col-sm-12 mb-2"><div class="alert alert-success">Les années ont bien été enregistrées !</div></div></div>';
 				break;
+			
+			case 'okRecuGet':
+				$msgAlert = '<div class="row"><div class="col-sm-12 mb-2"><div class="alert alert-success">Reçu(s) de paiement trouvé(s) pour cette recherche !</div></div></div>';
+				break;
+				
 			default:break;
 		}
 		return $msgAlert;

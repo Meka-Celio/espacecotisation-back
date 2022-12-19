@@ -53,7 +53,14 @@
                                 <p><b>Province      : </b><?= $mMedecin->LibelleProvince ?> </p>
                                 <p><b>Commune       : </b><?= $mMedecin->LibelleCommune ?></p>
                                 <p><b>Specialité    : </b><?= $mMedecin->SpecialiteMedecin ?> </p>
-                                <p><b>Adresse professionnelle : </b><?= $mMedecin->AdressePro ?> </p>
+                                <p><b>Adresse professionnelle : </b>
+                                <?php if (isset($mMedecin->AdressePro)) { 
+                                        echo $mMedecin->AdressePro;
+                                    }
+                                    else {
+                                        echo '';
+                                    }
+                                ?>
                                 <p><b>Secteur       : </b><?= $mMedecin->SecteurMedecin ?> </p>
                             </div>
                         </div>
@@ -81,13 +88,16 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <!-- si il y a plusieurs transactions -->
                                                 <?php if (is_array($cotisationNonPayer)) { ?>
                                                     <?php for ($i=0; $i < count($cotisationNonPayer); $i++) { ?>
+                                                        <?php if ($cotisationNonPayer[$i]->Annee > $lastyearPaid) { ?>
                                                         <tr>
                                                             <td>N° <?php echo $cotisationNonPayer[$i]->Id ?></td>
                                                             <td><?php echo $cotisationNonPayer[$i]->Annee ?></td>
                                                             <td><?php echo substr($cotisationNonPayer[$i]->AnneeMontant, 7) ?></td>
                                                         </tr>
+                                                        <?php } ?>
                                                     <?php } ?>
                                                 <?php } else { ?>
                                                     <tr>
@@ -108,6 +118,56 @@
                                 <?php } else { ?>
                                     <p class="text-success">
                                         Toutes les cotisation sont payées !
+                                    </p>
+                                <?php } ?>
+                            </div>
+                            <!-- .panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                    
+                    <div class="col-lg-12">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                Cotisations cachées non payées
+                            </div>
+                            <!-- .panel-heading -->
+                            <div class="panel-body">
+                                <?php if ($cotisationNonPayer) { ?>
+                                    <div class="table-responsive">
+                                        <table class="cotisation-table table">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Année Cotisation</th>
+                                                    <th>Montant</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- si il y a plusieurs transactions -->
+                                                <?php if (is_array($cotisationNonPayer)) { ?>
+                                                    <?php for ($i=0; $i < count($cotisationNonPayer); $i++) { ?>
+                                                        <?php if ($cotisationNonPayer[$i]->Annee < $lastyearPaid) { ?>
+                                                        <tr>
+                                                            <td>N° <?php echo $cotisationNonPayer[$i]->Id ?></td>
+                                                            <td><?php echo $cotisationNonPayer[$i]->Annee ?></td>
+                                                            <td><?php echo substr($cotisationNonPayer[$i]->AnneeMontant, 7) ?></td>
+                                                        </tr>
+                                                        <?php } ?>
+                                                    <?php } ?>
+                                                <?php } ?>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th colspan="2">Montant non réglé : </th> 
+                                                <th><?php echo $montantCacher ?> DH</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                <?php } else { ?>
+                                    <p class="text-success">
+                                        Aucune cotisation n'est cachée !
                                     </p>
                                 <?php } ?>
                             </div>
@@ -150,6 +210,12 @@
                                                     </tr>
                                                 <?php } ?>
                                             </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th colspan="2">Montant réglé : </th> 
+                                                    <th><?php echo $montantRegler ?> DH</th>
+                                                </tr>
+                                            </tfoot>
                                         </table>
                                     </div>
                                 <?php } else { ?>

@@ -22,12 +22,12 @@ class User extends Controller
 	public function login ()
 	{
 		\Http::redirect('index.php?c=user&task=dashboard');
-		$login 		=	null;
-		$dUser 		=	null;
-		$dMotdepasse = null;
-		$passVerify = 	null;
-		$msgAlert	=	null;
-		$ok = 0;
+		$login 			=	null;
+		$dUser 			=	null;
+		$dMotdepasse 	= 	null;
+		$passVerify 	= 	null;
+		$msgAlert		=	null;
+		$ok 			= 	0;
 
 		if (!empty($_POST['login']))
 		{
@@ -118,32 +118,23 @@ class User extends Controller
 
 	public function dashboard ()
 	{
-		$medecinModel 		= 	new \models\Medecin();
-		$regionModel		=	new \models\Region();
-		$specialiteModel	=	new \models\Specialite();
-		$transactionModel 	=	new \models\Transaction();
+		$medecinModel 			= 	new \models\Medecin();
+		$transactionModel 		=	new \models\Transaction();
 
-		$regions 			= 	$regionModel->findAll();
-		$specialites		=	$specialiteModel->findAll();
-
-		$tabNbrMedecins		=	$medecinModel->getNumberOf();
-		$nbrMedecins 		= 	(int)$tabNbrMedecins[0]['NumberOf'];
-
-		$tabNbrRegions		=	$regionModel->getNumberOf();
-		$nbrRegions 		=	(int)$tabNbrRegions[0]['NumberOf'];
-
-		$tabNbrSpecialites		=	$specialiteModel->getNumberOf();
-		$nbrSpecialites 		=	(int)$tabNbrSpecialites[0]['NumberOf'];
+		$tabNbrMedecins			=	$medecinModel->getNumberOf();
+		$nbrMedecins 			= 	(int)$tabNbrMedecins[0]['NumberOf'];
+		$medecins 				= 	$medecinModel->findAllByLimit(1, 10, 'connected_at DESC');
 
 		$tabNbrUsers			=	$this->model->getNumberOf();
 		$nbrUsers 				=	(int)$tabNbrUsers[0]['NumberOf'];
 
 		$tabNbrTransactions 	=	$transactionModel->getNumberOf();
 		$nbrTransactions 		=	(int)$tabNbrTransactions[0]['NumberOf'];
+		$transactions 			= 	$transactionModel->findAllByLimit(1, 10, 'datePaiement DESC');
 
 		$pageTitle = "Dashboard";
 
-		\Renderer::render('views/dashboard', compact('pageTitle', 'nbrMedecins', 'nbrRegions', 'nbrSpecialites', 'nbrUsers', 'nbrTransactions'));
+		\Renderer::render('views/dashboard', compact('pageTitle', 'nbrMedecins', 'nbrUsers', 'nbrTransactions', 'transactions', 'medecins'));
 
 	}
 

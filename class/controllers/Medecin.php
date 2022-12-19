@@ -84,7 +84,33 @@ class Medecin extends Controller
 
 		$getCotisationPayer 	=	\Marit::getCotisationPayer($medecin['cin']);
 		$getCotisationPayerResponse = $getCotisationPayer->GetCotisationPayerAvecAuthResult->MedecinCotisation->listeAnnee;
-		$montantNonPayer = 0;
+		$montantNonPayer 	= 	0;
+		$montantCacher 		=	0;
+		$montantRegler 		=	0;
+		$lastyearPaid 		=	0;
+
+
+		if (isset($getCotisationPayerResponse->AnneeVM))
+		{
+			$cotisationPayer = $getCotisationPayerResponse->AnneeVM;
+			if (is_array($cotisationPayer))
+			{
+				$lastyearPaid = $cotisationPayer[0]->Annee;
+				for ($y = 0; $y < count($cotisationPayer); $y++)
+				{
+					$montantRegler += $cotisationPayer[$y]->AnneeMontant;
+				}
+			}
+			else
+			{
+				$lastyearPaid = $cotisationPayer->Annee;
+				$montantRegler += $cotisationPayer->AnneeMontant;
+			}
+		}
+		else
+		{
+			$cotisationPayer = null;
+		}
 
 		if (isset($getCotisationNonPayerResponse->AnneeVM))
 		{
@@ -92,7 +118,14 @@ class Medecin extends Controller
 			if (is_array($cotisationNonPayer))
 			{
 				for ($i = 0; $i < count($cotisationNonPayer); $i++) {
-					$montantNonPayer += substr($cotisationNonPayer[$i]->AnneeMontant, 7);
+					if ($cotisationNonPayer[$i]->Annee > $lastyearPaid)
+					{
+						$montantNonPayer += substr($cotisationNonPayer[$i]->AnneeMontant, 7);
+					}	
+					else
+					{
+						$montantCacher += substr($cotisationNonPayer[$i]->AnneeMontant, 7);
+					}
 				}
 			}
 			else 
@@ -106,21 +139,12 @@ class Medecin extends Controller
 			$this->model->update("situation", 1, $medecin['id']);
 			$medecin = $this->model->find($medecin_id);
 		}
-
-		if (isset($getCotisationPayerResponse->AnneeVM))
-		{
-			$cotisationPayer = $getCotisationPayerResponse->AnneeVM;
-		}
-		else
-		{
-			$cotisationPayer = null;
-		}
-
+ 
 		/**
 		 * 5. On affiche 
 		 */
 		$pageTitle = 'Voir medecin - '.$medecin['nom_complet'];
-		\Renderer::render ('views/medecin-show', compact('pageTitle', 'medecin', 'medecin_id', 'mMedecin', 'cotisationPayer', 'cotisationNonPayer', 'montantNonPayer'));
+		\Renderer::render ('views/medecin-show', compact('pageTitle', 'medecin', 'medecin_id', 'mMedecin', 'cotisationPayer', 'cotisationNonPayer', 'montantNonPayer', 'lastyearPaid', 'montantCacher', 'montantRegler'));
 	}
 
 

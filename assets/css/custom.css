@@ -76,6 +76,11 @@ tableaux
 	font-size: 13px;
 }
 
+table, table tr th, table tr td
+{
+	text-align: center;
+}
+
 #dataTables-example,
 #dataTables-example th,
 #dataTables-example td,

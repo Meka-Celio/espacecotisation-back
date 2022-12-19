@@ -97,15 +97,27 @@
                                 </thead>
                                 <tbody>
                                     <?php foreach ($transactions as $trans) { ?>
-                                        <tr>
-                                            <td><?= $trans['cin'] ?></td>
-                                            <td><?= $trans['nom'] ?></td>
-                                            <td><?= $trans['n_commande'] ?></td>
-                                            <td><?= $trans['datePaiement'] ?></td>
-                                            <td>
-                                                <a href="index.php?c=transaction&task=show&id=<?= $trans['id'] ?>" class="btn btn-warning btn-circle"><i class="fa fa-search"></i></a>
-                                            </td>
-                                        </tr>
+                                        <?php if ($trans['validation'] == 1) { ?>
+                                            <tr class='text-success'>
+                                                <td><?= $trans['cin'] ?></td>
+                                                <td><?= $trans['nom'] ?></td>
+                                                <td><?= $trans['n_commande'] ?></td>
+                                                <td><?= $trans['datePaiement'] ?></td>
+                                                <td>
+                                                    <a href="index.php?c=transaction&task=show&id=<?= $trans['id'] ?>" class="btn btn-warning btn-circle"><i class="fa fa-search"></i></a>
+                                                </td>
+                                            </tr>
+                                        <?php } else  { ?>
+                                            <tr>
+                                                <td><?= $trans['cin'] ?></td>
+                                                <td><?= $trans['nom'] ?></td>
+                                                <td><?= $trans['n_commande'] ?></td>
+                                                <td><?= $trans['datePaiement'] ?></td>
+                                                <td>
+                                                    <a href="index.php?c=transaction&task=show&id=<?= $trans['id'] ?>" class="btn btn-warning btn-circle"><i class="fa fa-search"></i></a>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
                                     <?php } ?>
                                 </tbody>
                             </table>
