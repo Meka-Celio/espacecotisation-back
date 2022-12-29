@@ -55,6 +55,7 @@ class Transaction extends Controller
 	public function show ()
 	{
 		$transaction_id = 0;
+		$alert = null;
 
 		if (!empty($_GET['id']) && ctype_digit($_GET['id']))
 		{
@@ -63,9 +64,15 @@ class Transaction extends Controller
 
 		$transaction = $this->model->find($transaction_id);
 
+		if (isset($_GET['note']))
+		{
+			$note = $_GET['note'];
+			$alert = \Alert::getAlert($note);
+		}
+
 		$pageTitle = "Transaction N° ".$transaction['n_commande'];
 
-		\Renderer::render('views/transaction-show', compact('pageTitle', 'transaction', 'transaction_id'));
+		\Renderer::render('views/transaction-show', compact('pageTitle', 'transaction', 'transaction_id', 'alert'));
 	}
 
 	public function activate ()

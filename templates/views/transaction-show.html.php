@@ -16,7 +16,10 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="panel-body">
+                            <?php echo $alert ?>
+
                             <table width="100%" class="transaction-table table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr class="gradeX">
@@ -57,11 +60,16 @@
                                 </tbody>
                             </table>
                             <!-- /.table-responsive -->
-                            <div class="action-buttons col-md-3"> 
+                            <div class="action-buttons col-md-4"> 
                                 <form action="index.php?c=transaction&task=activate" method="post" class="form">
                                     <input type="hidden" name="transaction_id" value="<?= $transaction_id ?>">
                                     <input type="hidden" name="n_commande" value="<?= $transaction['n_commande'] ?>">
                                     <input type="submit" name="submit" value="Activer" class="btn btn-warning">
+                                </form>
+
+                                <form action="index.php?c=cotisation&task=check" method="post" class="form">
+                                    <input type="hidden" name="transaction_id" value="<?= $transaction_id ?>">
+                                    <input type="submit" name="submit" value="Enregistrer" class="btn btn-success">
                                 </form>
 
                                 <form action="index.php?c=cotisation&task=getRecu" class="form" method="post">

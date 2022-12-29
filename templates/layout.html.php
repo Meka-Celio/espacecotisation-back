@@ -61,7 +61,18 @@
                             <a href="index.php?c=user&task=dashboard" class="link-danger"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="index.php?c=medecin&task=index" class="link-danger"><i class="fa fa-user-md fa-fw"></i> Médecins</a>
+                            <a href="#"><i class="fa fa-user-md fa-fw"></i> Médecins<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="index.php?c=medecin&task=index" class="link-danger"><i class="fa fa-user-md fa-fw"></i> Tous les Médecins</a>
+                                </li>
+                                <li>
+                                    <a href="index.php?c=medecin&task=add" class="text-success"><i class="fa fa-user-md fa-fw"></i> Ajouter un médecin</a>
+                                </li>
+                                <li>
+                                    <a href="index.php?c=medecin&task=rechercher" class="text-warning"><i class="fa fa-user-md fa-fw"></i> Rechercher un médecin</a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <a href="index.php?c=transaction&task=index"><i class="fa fa-th-list"></i> Transactions</a>

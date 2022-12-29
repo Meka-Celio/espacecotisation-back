@@ -37,4 +37,18 @@ class Medecin extends Model
 		return $items;
 	}
 
+	public function insert (string $region, string $cin, string $nom, string $prenom, string $nom_complet, string $specialite,string $telephone, string $email, string $pwd, int $situation, string $connected_at, string $modify_at,int $region_id, int $specialite_id, string $keyuser)
+	{
+		$sql = "INSERT INTO medecins VALUES (0, '$region', '$cin', '$nom', '$prenom', '$nom_complet', '$specialite', '$telephone', '$email', '$pwd', $situation, '$connected_at', '$modify_at', $region_id, $specialite_id, '$keyuser')";
+		$query = $this->pdo->query($sql);
+
+		if ($query) {
+			$a = 1;
+		}
+		else{
+			$a = 0;
+		}
+		return $a;
+	}
+
 }

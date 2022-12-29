@@ -7,7 +7,60 @@
             </div>
             <!-- /.row -->
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-3">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            Filtres
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <form action="index.php?c=medecin&task=find" class="form" method="post">
+                                <div class="form-group col-sm-12">
+                                    <label for="">CIN</label>
+                                    <input type="text" name="cin" value="" placeholder="CIN" class="form-control">
+                                </div>
+
+                                <div class="form-group col-sm-12">
+                                    <label for="">Nom Médecin</label>
+                                    <input type="text" name="nom" value="" placeholder="Nom Medecin" class="form-control">
+                                </div>
+
+                                <div class="form-group col-sm-12">
+                                    <label for="">Prenom</label>
+                                    <input type="text" name="prenom" value="" placeholder="Prenom" class="form-control">
+                                </div>
+
+                                <div class="form-group col-sm-12">
+                                    <label for="">Region</label>
+                                    <select name="region" id="" class="form-control">
+                                        <option value="">---- Region ----</option>
+                                        <?php foreach ($regions as $region) { ?>
+                                            <option value="<?= $region['nomRegion'] ?>"><?= $region['nomRegion'] ?></option>
+                                        <?php } ?>
+
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-sm-12">
+                                    <label for="">Specialite</label>
+                                    <select name="specialite" id="" class="form-control">
+                                        <option value="">---- Specialite ----</option>
+                                        <?php foreach ($specialites as $spec) { ?>
+                                            <option value="<?= $spec['nomSpecialite'] ?>"><?= $spec['nomSpecialite'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                                <input type="hidden" name="submit" value="submit">
+                                <div class="form-group col-sm-12">
+                                    <button class="btn btn-success"><i class="fa fa-search"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-9">
                     <div class="panel panel-success">
                         <div class="panel-heading">
                             Tous les médecins
@@ -23,56 +76,6 @@
                             </div>
                         </div>
                         <?php } ?>
-
-                        <div class="row">
-                            <div class="table_filters">
-                                <form action="index.php?c=medecin&task=find" class="form" method="post">
-                                    <div class="col-sm-2">
-                                        <div class="filter">
-                                            <div class="col-sm-12">
-                                                <input type="text" name="cin" value="" placeholder="CIN" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-2">
-                                        <div class="filter">
-                                            <div class="col-sm-12">
-                                                <input type="text" name="nom" value="" placeholder="Nom Medecin" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-2">
-                                        <div class="filter">
-                                            <div class="col-sm-12">
-                                                <input type="text" name="prenom" value="" placeholder="Prenom" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-2">
-                                        <div class="filter">
-                                            <div class="col-sm-12">
-                                                <input type="text" name="region" value="" placeholder="Region" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-2">
-                                        <div class="filter">
-                                            <div class="col-sm-12">
-                                                <input type="text" name="specialite" value="" placeholder="Specialite" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <input type="hidden" name="submit" value="submit">
-                                    <div class="col-sm-2">
-                                        <button class="btn btn-success"><i class="fa fa-search"></i></button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
 
                         <div class="panel-body">
                             <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">

@@ -16,6 +16,12 @@ class Medecin extends Controller
 		$nbrMedecins 		= 	(int)$tabNbrMedecins[0]['NumberOf'];
 		$msgAlert			=	"";
 
+		$regionModel 			= 	new \models\Region();
+		$specialiteModel 		=	new \models\Specialite();
+
+		$regions 				=	$regionModel->findAll('id ASC');
+		$specialites 			=	$specialiteModel->findAll('id ASC');
+
 		$elementByPage 		= 20;
 		if (isset($_GET['page']))
 		{
@@ -48,7 +54,7 @@ class Medecin extends Controller
 		 */
 		$pageTitle = "Accueil";
 
-		\Renderer::render('views/medecins', compact('pageTitle', 'medecins','nbrMedecins', 'elementByPage', 'currentPage', 'nbrPages', 'msgAlert'));
+		\Renderer::render('views/medecins', compact('pageTitle', 'medecins','nbrMedecins', 'elementByPage', 'currentPage', 'nbrPages', 'msgAlert', 'regions', 'specialites'));
 	}
 
 
@@ -431,5 +437,331 @@ class Medecin extends Controller
 			$this->model->update($column, $update, $medecin_id);
 		}
 		\Http::redirect("index.php?c=medecin&task=edit&id=$medecin_id&alert=$alert&source=$source");
+	}
+
+	public function rechercher ()
+	{
+		$alert 				= 	null;
+		$mMedecin 			= 	null;
+		$cotisationNonPayer = 	null;
+		$cotisationPayer 	=	null;
+
+		$montantNonPayer 	= 	0;
+		$montantCacher 		=	0;
+		$montantRegler 		=	0;
+		$lastyearPaid 		=	0;
+
+		if (isset($_GET['note']))
+		{
+			$note = $_GET['note'];
+			$alert = \Alert::getAlert($note);
+		}
+
+		if (!empty($_GET['cin']))
+		{
+			$mMedecin = \Marit::getInfoMedecin($_GET['cin']); 
+			$mMedecin = $mMedecin->GetInfoMedecinAvecAuthResult;
+
+			$getCotisationNonPayer 	=	\Marit::getCotisationNonPayer($_GET['cin']);
+			$getCotisationNonPayerResponse = $getCotisationNonPayer->GetCotisationNonPayerAvecAuthResult->MedecinCotisation->listeAnnee;
+
+			$getCotisationPayer 	=	\Marit::getCotisationPayer($_GET['cin']);
+			$getCotisationPayerResponse = $getCotisationPayer->GetCotisationPayerAvecAuthResult->MedecinCotisation->listeAnnee;
+		}
+
+		if (isset($getCotisationPayerResponse->AnneeVM))
+		{
+			$cotisationPayer = $getCotisationPayerResponse->AnneeVM;
+			if (is_array($cotisationPayer))
+			{
+				$lastyearPaid = $cotisationPayer[0]->Annee;
+				for ($y = 0; $y < count($cotisationPayer); $y++)
+				{
+					$montantRegler += $cotisationPayer[$y]->AnneeMontant;
+				}
+			}
+			else
+			{
+				$lastyearPaid = $cotisationPayer->Annee;
+				$montantRegler += $cotisationPayer->AnneeMontant;
+			}
+		}
+		else
+		{
+			$cotisationPayer = null;
+		}
+
+		if (isset($getCotisationNonPayerResponse->AnneeVM))
+		{
+			$cotisationNonPayer = $getCotisationNonPayerResponse->AnneeVM;
+			if (is_array($cotisationNonPayer))
+			{
+				for ($i = 0; $i < count($cotisationNonPayer); $i++) {
+					if ($cotisationNonPayer[$i]->Annee > $lastyearPaid)
+					{
+						$montantNonPayer += substr($cotisationNonPayer[$i]->AnneeMontant, 7);
+					}	
+					else
+					{
+						$montantCacher += substr($cotisationNonPayer[$i]->AnneeMontant, 7);
+					}
+				}
+			}
+			else 
+			{
+				$montantNonPayer += substr($cotisationNonPayer->AnneeMontant, 7);
+			}
+		}
+
+		// var_dump($mMedecin);
+
+		$pageTitle = "Rechercher un médecin";
+		\Renderer::render('views/findMedecin', compact('pageTitle', 'alert', 'mMedecin', 'cotisationPayer', 'cotisationNonPayer', 'montantNonPayer', 'lastyearPaid', 'montantCacher', 'montantRegler'));
+	}
+
+	public function findOnMarit ()
+	{
+		$cin = null;
+		if (!empty($_POST['cin']))
+		{
+			$cin 		 = 	$_POST['cin'];
+		}
+		else
+		{
+			\Http::redirect('index.php?c=medecin&task=rechercher&note=noExistCin');
+		}
+
+		$_getInfoMedecin 	=	\Marit::getInfoMedecin($cin);
+
+		if (isset($_getInfoMedecin->GetInfoMedecinAvecAuthResult)) 
+		{
+			\Http::redirect("index.php?c=medecin&task=rechercher&cin=$cin&note=okFindMedecin");
+		}
+		else
+		{
+			\Http::redirect('index.php?c=medecin&task=rechercher&note=noExistCin');
+		}
+	}
+
+	public function add ()
+	{
+		$alert 				= 	null;
+		$regionModel 		= 	new \models\Region();
+		$specialiteModel 	= 	new \models\Specialite();
+		$mMedecin 			=	null;
+		$cin 				=	null;
+
+		$regions = $regionModel->findAll('id ASC');
+		$specialites = $specialiteModel->findAll('id ASC');
+
+		// var_dump($specialites);
+
+		if (isset($_GET['note']))
+		{
+			$note = $_GET['note'];
+			$alert = \Alert::getAlert($note);
+		}
+
+		if (isset($_GET['cin']))
+		{
+			$cin 				= 	$_GET['cin'];
+			$_getInfoMedecin 	= 	\Marit::getInfoMedecin($cin);
+			$mMedecin 			=	$_getInfoMedecin->GetInfoMedecinAvecAuthResult;
+		}
+
+		$pageTitle = "Ajouter un médecin";
+		\Renderer::render('views/addMedecin', compact('pageTitle', 'alert', 'regions', 'specialites', 'mMedecin'));
+	}
+
+	public function check ()
+	{
+		$cin = null;
+
+		if (!empty($_POST['submit']))
+		{
+			if (!empty($_POST['cin']))
+			{
+				$_getInfoMedecin = \Marit::getInfoMedecin($_POST['cin']);
+				if (isset($_getInfoMedecin->GetInfoMedecinAvecAuthResult))
+				{
+					$cin = $_POST['cin'];
+					\Http::redirect('index.php?c=medecin&task=add&note=okFindMedecin&cin='.$cin);
+				}
+				else
+				{
+					\Http::redirect('index.php?c=medecin&task=add&note=noExistCin');
+				}
+			}
+			else
+			{
+				\Http::redirect('index.php?c=medecin&task=add&note=noCin');
+			}
+		}
+		else
+		{
+			\Http::redirect('index.php?c=medecin&task=add&note=noForm');
+		}
+	}
+
+	public function store ()
+	{
+		$regionModel 		= new \models\Region();
+		$specialiteModel 	= new \models\Specialite();
+
+		// Variables qui seront utilisées
+		$cin 				=	null;
+		$nom 				=	null;
+		$prenom 			=	null;
+		$nom_complet 		=	'Dr ';
+		$specialite_id 		=	0;
+		$specialite 		=	null;
+		$region_id 			=	0;
+		$region 			=	null;
+		$telephone 			=	null;
+		$email 				=	null;
+		$pwd 				= 	'12345';
+		$situation 			=	0;
+		$connected_at 		=	'0000-00-00 00:00:00';
+		$modify_at 			=	'0000-00-00';
+		$keyuser 			= 	'vide';
+
+		$mMedecin 			=	null;
+
+		// 1. V&rifier que le formulaire a bien été envoyé
+		if (!empty($_POST['submit']))
+		{
+			
+			// 2. Vérifier que tous les champs sont présent
+
+			// CIN
+			if (!empty($_POST['cin']))
+			{	
+				$cin = $_POST['cin'];
+				// Vérification de l'existence du médecin dans MARIT
+				$_getInfoMedecin = \Marit::getInfoMedecin($cin);
+
+				if (isset($_getInfoMedecin->GetInfoMedecinAvecAuthResult))
+				{
+					$mMedecin = $_getInfoMedecin->GetInfoMedecinAvecAuthResult;
+					if (!$cin === $mMedecin->Cin) {
+						\Http::redirect('index.php?c=medecin&task=add&note=noExistCin');
+					}
+				}
+				else 
+				{
+					\Http::redirect('index.php?c=medecin&task=add&note=noExistCin');
+				}
+			}
+
+			// Nom
+			if (!empty(trim($_POST['nom'])))
+			{
+				$nom = trim($_POST['nom']);
+			} else {
+				\Http::redirect('index.php?c=medecin&task=add&note=noInputLastName');
+			}
+
+			// Prenom
+			if (!empty(trim($_POST['prenom'])))
+			{
+				$prenom = trim($_POST['prenom']);
+			} else {
+				\Http::redirect('index.php?c=medecin&task=add&note=noInputFirstName');
+			}
+
+			// Nom COMPLET
+			if (count($_POST) == 8)
+			{
+				$nom_complet .= $nom.' '.$prenom;
+			}
+			else 
+			{
+				$nom_complet .= $_POST['nom_complet'];
+			}
+
+			// IdSpecialite et Specialite
+			if ($_POST['idSpecialite'])
+			{
+				$idSpecialite 	= 	1 * $_POST['idSpecialite'];
+				$specialite 	= 	$specialiteModel->find($idSpecialite);
+				if ($specialite)
+				{
+					$specialite = $specialite['nomSpecialite'];
+				}
+				else
+				{
+					\Http::redirect('index.php?c=medecin&task=add&note=noFindSpecialite');
+				}
+			}
+			else{
+				\Http::redirect('index.php?c=medecin&task=add&note=noInputIdSpecialite');
+			}
+
+			// IdRegion et Region
+			if ($_POST['idRegion'])
+			{
+				$idRegion 	= 	1 * $_POST['idRegion'];
+				$region 	=	$regionModel->find($idRegion);
+				if ($region)
+				{
+					$region = $region['nomRegion'];
+				}
+				else
+				{
+					\Http::redirect('index.php?c=medecin&task=add&note=noFindRegion');
+				}
+			}
+			else{
+				\Http::redirect('index.php?c=medecin&task=add&note=noInputIdRegion');
+			}
+
+			// Telephone
+			$telephone = $_POST['telephone'];
+
+			// Email
+			$email = $_POST['email'];
+
+			// Situation
+			$verifGetCotisationNonPayer = \Marit::getCotisationNonPayer($cin);
+			if (!isset($verifGetCotisationNonPayer->GetCotisationNonPayerAvecAuthResult->MedecinCotisation->listeAnnee->AnneeVM))
+			{
+				$situation = 1;
+			}
+
+			$addMedecin = $this->model->insert($region, $cin, $nom, $prenom, $nom_complet, $specialite, $telephone, $email, $pwd, $situation, $connected_at, $modify_at, $region_id,  $specialite_id, $keyuser);
+			if ($addMedecin)
+			{
+				\Http::redirect('index.php?c=medecin&task=add&note=okAddMedecin');
+			}
+			else
+			{
+				\Http::redirect('index.php?c=medecin&task=add&note=noForm');
+			}
+		}
+		else 
+		{
+			\Http::redirect('index.php?c=medecin&task=add&note=failAddQuery');
+		}
+		/*
+		// Champs dans la database
+		id2	
+		region	
+		cin2	
+		nom	
+		prenom	
+		nom_complet	
+		specialite	
+		telephone	
+		email	
+		pwd	
+		situation	
+		connected_at	
+		modify_at	
+		region_id	
+		specialite_id	
+		keyuser
+
+	*/
+		
 	}
 }

@@ -19,7 +19,7 @@
                 
                     <?php echo $alert ?>
 
-                    <form action="index.php?c=cotisation&task=insert" method="post">
+                    <form action="marit/addCotisation.php" method="post">
                         <div class="form-group">
                             <div class="mb-3">
                                 <label for="cinInput" class="form-label">CIN du médecin</label>
